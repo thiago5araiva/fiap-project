@@ -1,0 +1,28 @@
+POST https://x43w3s8fkl.execute-api.us-east-1.amazonaws.com/hosts
+{
+  "company_id": "THE_ONLY_COMPANY",
+  "name": "cabecinha.naotemombro.com",
+  "hostaddr": "192.168.0.1",
+  "port": 22,
+  "platform_id": "ssg-ubuntu2204-ds",
+  "credentials": {
+    "type": "ssh-key-based",
+    "user": "root",
+    "sudo": false
+  },
+  "profiles": [
+    "xccdf_org.ssgproject.content_profile_cis_level1_server",
+    "xccdf_org.ssgproject.content_profile_cis_level1_workstation"
+  ],
+  "status": "active"
+}
+
+POST https://x43w3s8fkl.execute-api.us-east-1.amazonaws.com/hosts/a442f278-a90d-456c-a4b2-adf28d5c7754/scans
+{
+    "platform_id": "ssg-ubuntu2204-ds",
+    "profile_id": "xccdf_org.ssgproject.content_profile_cis_level1_workstation"
+}
+
+GET https://x43w3s8fkl.execute-api.us-east-1.amazonaws.com/hosts
+GET https://x43w3s8fkl.execute-api.us-east-1.amazonaws.com/hosts/a442f278-a90d-456c-a4b2-adf28d5c7754
+GET https://x43w3s8fkl.execute-api.us-east-1.amazonaws.com/hosts/a442f278-a90d-456c-a4b2-adf28d5c7754/scans
