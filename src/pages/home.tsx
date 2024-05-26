@@ -33,7 +33,6 @@ import {
   asyncAddHost,
   asyncGetCompanyHosts,
   asyncGetPlatforms,
-  IFormAddHost,
   IHosts,
   IPlatform,
   IProfile,
@@ -42,13 +41,28 @@ import { Eye, Plus } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const defaultFormdata = {
+  company_id: "",
+  name: "",
+  hostaddr: "",
+  port: 22,
+  platform_id: "",
+  credentials: {
+    type: "",
+    user: "",
+    sudo: false,
+  },
+  profiles: [""],
+  status: "",
+};
+
 export default function App() {
   const [open, setOpen] = useState(false);
   const [hosts, setHosts] = useState<IHosts[]>();
   const [platforms, setPlatforms] = useState<IPlatform[]>([]);
   const [profile, setProfile] = useState<IProfile[]>([]);
 
-  const [formData, setFormData] = useState<IFormAddHost>({});
+  const [formData, setFormData] = useState(defaultFormdata);
 
   const handleSelectName = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, name: event.currentTarget.value }));

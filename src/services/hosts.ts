@@ -50,6 +50,7 @@ export type IScanPostValues = {
 export interface IScan {
   error_message: string;
   platform_id: string;
+  profile_id: string;
   timestamp: string;
   status: string;
   scan_id: string;
