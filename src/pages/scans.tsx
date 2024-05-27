@@ -46,11 +46,8 @@ import { Link, useLocation, useParams } from "react-router-dom";
 - botao pra dar scan na tela de scan quando for complete
 - default : a442f278-a90d-456c-a4b2-adf28d5c7754
 ***/
-type Props = {
-  title: string;
-  platform: string;
-};
-export default function Scans({ title, platform }: Props) {
+
+export default function Scans() {
   const [open, setOpen] = useState(false);
   const [scan, setScan] = useState<IScan[]>([]);
   const [platforms, setPlatforms] = useState<IPlatform[]>([]);
@@ -111,8 +108,6 @@ export default function Scans({ title, platform }: Props) {
     };
     platforms();
   }, [scan]);
-
-  console.log("here", platforms);
 
   return (
     <section className="scan">
