@@ -110,13 +110,13 @@ export default function Scans() {
           <DialogTrigger asChild>
             <Button>
               <Plus className="text-background mr-3 w-4 h-4" />
-              Novo Host
+              Novo Scan
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Adicionar novo Host</DialogTitle>
-              <DialogDescription>Adicione aqui o novo host</DialogDescription>
+              <DialogTitle>Adicionar novo Scan</DialogTitle>
+              <DialogDescription>Adicione aqui o novo scan</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
