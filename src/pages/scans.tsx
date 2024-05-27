@@ -36,7 +36,7 @@ import {
 } from "@/services/hosts";
 import { Eye, Plus, ScanBarcode } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 /***
 
@@ -46,8 +46,11 @@ import { Link, useParams } from "react-router-dom";
 - botao pra dar scan na tela de scan quando for complete
 - default : a442f278-a90d-456c-a4b2-adf28d5c7754
 ***/
-
-export default function Scans() {
+type Props = {
+  title: string;
+  platform: string;
+};
+export default function Scans({ title, platform }: Props) {
   const [open, setOpen] = useState(false);
   const [scan, setScan] = useState<IScan[]>([]);
   const [platforms, setPlatforms] = useState<IPlatform[]>([]);
@@ -56,6 +59,8 @@ export default function Scans() {
   const [currentPlatform, setCurrentPlatform] = useState<string>("");
   const [currentProfile, setCurrentProfile] = useState<string>("");
   const { id } = useParams();
+
+  const { state } = useLocation();
 
   /***
    GET/hosts/{host_id}/profiles
@@ -98,14 +103,29 @@ export default function Scans() {
   useEffect(() => {
     const platforms = async () => {
       const { data } = await asyncGetPlatforms();
-      setPlatforms(data);
+      const selected = data?.filter(
+        (item) => item.platform_id === scan[0]?.platform_id,
+      );
+      console.log(selected);
+      setPlatforms(selected);
     };
     platforms();
-  }, []);
+  }, [scan]);
+
+  console.log("here", platforms);
 
   return (
     <section className="scan">
-      <div className="header flex justify-end mt-10">
+      <div className="header flex justify-between items-center mt-10">
+        <div>
+          <h3>
+            Nome:<span className="ml-3">{state?.name}</span>
+          </h3>
+          <p>
+            Plataforma:
+            <span className="ml-3">{platforms[0]?.title}</span>
+          </p>
+        </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -123,7 +143,11 @@ export default function Scans() {
                 <Label htmlFor="platforms" className="text-right">
                   Plataformas
                 </Label>
-                <Select onValueChange={handleSelectPlatform}>
+                <Select
+                  onValueChange={handleSelectPlatform}
+                  defaultValue={platforms[0]?.platform_id}
+                  disabled
+                >
                   <SelectTrigger className="col-span-3">
                     <SelectValue placeholder="Selecione a plataforma" />
                   </SelectTrigger>
@@ -182,7 +206,6 @@ export default function Scans() {
                 <TableHead>Status</TableHead>
                 <TableHead>Profile</TableHead>
                 <TableHead>Scan</TableHead>
-                <TableHead>Host</TableHead>
                 <TableHead className="text-center">Re-Scan</TableHead>
                 <TableHead className="text-center">Visualizar</TableHead>
               </TableRow>
@@ -200,7 +223,6 @@ export default function Scans() {
                   <TableCell>{scan.status}</TableCell>
                   <TableCell>{scan.profile_id}</TableCell>
                   <TableCell>{scan.scan_id}</TableCell>
-                  <TableCell>{scan.host_id}</TableCell>
                   <TableCell>
                     <Button
                       className="flex justify-center"

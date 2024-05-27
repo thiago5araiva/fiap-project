@@ -252,6 +252,7 @@ export default function App() {
                     <Link
                       className="flex justify-end"
                       to={`/scans/${scan.host_id}`}
+                      state={scan}
                     >
                       <Eye className="text-primary" />
                     </Link>
